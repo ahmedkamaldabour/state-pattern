@@ -121,6 +121,14 @@ class Task extends Model
         return $this->getCurrentStateObject()->getStateName();
     }
 
+    // on smart method for all states
+    public function changeState(string $stateName): void
+    {
+        $stateFunction = $stateName();
+        $this->getCurrentStateObject()->$stateFunction($this);
+        $this->save();
+    }
+
 // Relationship with User
     public function assignee()
     {
